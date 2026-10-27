@@ -1,0 +1,66 @@
+:root {
+  /* Paleta cromática BelGrano Café */
+  --color-espresso-900: #1C130E;
+  --color-espresso-800: #2D1E16;
+  --color-roast-700: #523B2E;
+  --color-roast-600: #6B4E3D;
+  --color-warm-amber-500: #B85317;
+  --color-warm-amber-600: #9E4712;
+  --color-warm-amber-700: #7C350B;
+  --color-crema-50: #FAF7F2;
+  --color-crema-100: #F3ECE2;
+  --color-crema-200: #EADBCA;
+  --color-surface-card: #FFFFFF;
+  --color-border-subtle: #E8DFD5;
+  --color-border-focus: #9E4712;
+  
+  /* Estados de fidelidad y feedback semántico */
+  --color-loyalty-green: #2B593F;
+  --color-loyalty-bg: #E8F2EC;
+  --color-success-bg: #EBF5EE;
+  --color-success-text: #1D5C35;
+  --color-success-border: #A3D9B5;
+  --color-error-bg: #FDF2F2;
+  --color-error-text: #991B1B;
+  --color-error-border: #F8B4B4;
+  --color-warning-bg: #FFF8E6;
+  --color-warning-text: #92400E;
+  --color-warning-border: #FCD34D;
+
+  /* Tipografía */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Escala tipográfica */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1.0rem;   /* 16px */
+  --font-size-md: 1.125rem;   /* 18px */
+  --font-size-lg: 1.25rem;    /* 20px */
+  --font-size-xl: 1.5rem;     /* 24px */
+  --font-size-2xl: 2.0rem;    /* 32px */
+  --font-size-3xl: 2.5rem;    /* 40px */
+  --font-size-4xl: 3.0rem;    /* 48px */
+
+  /* Espaciado */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Bordes y elevaciones */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  --shadow-subtle: 0 2px 8px rgba(45, 30, 22, 0.04);
+  --shadow-card: 0 4px 16px rgba(45, 30, 22, 0.05);
+  --shadow-hover: 0 8px 24px rgba(45, 30, 22, 0.09);
+}
