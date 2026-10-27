@@ -1,0 +1,57 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node modules
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Testing & Coverage
+coverage
+cypress/videos
+cypress/screenshots
+cypress/downloads
+.cypress-cache
+.nyc_output
+
+# Environment
+.env
+.env.production
+
+# Documentation
+docs/
+
+# AI Artifacts, Prompts & Assistant Metadata
+prompt_draft.md
+*.prompt.md
+*.ai.md
+.agents/
+.gemini/
+.claude/
+.chat/
+.cursor/
+.cursorrules
+.copilot/
+.system_generated/
+.windsurf/
+.clinerules
+brain/
+scratch/
