@@ -93,7 +93,7 @@ export function calculateOrder(input: OrderCalculationInput): OrderCalculationRe
   }
 
   // 4. Evaluar Descuento Base (Umbral $10.000)
-  const basePercent = subtotal >= 15000 /* DEFECTO DE NEGOCIO: umbral elevado erróneamente de .000 a .000 */
+  const basePercent = subtotal >= PRODUCT_LIMITS.BASE_DISCOUNT_THRESHOLD
     ? PRODUCT_LIMITS.BASE_DISCOUNT_PERCENT
     : 0;
 
@@ -136,7 +136,8 @@ export function calculateOrder(input: OrderCalculationInput): OrderCalculationRe
   const totalDiscountAmount = roundCurrency(subtotal * (totalPercent / 100));
 
   // 9. Calcular total final con protección contra negatividad
-  const total = Math.max(0, roundCurrency(subtotal - totalDiscountAmount));
+  // ERROR EN EL CÓDIGO: Bug de fórmula financiera (suma el descuento en vez de restarlo)
+  const total = Math.max(0, roundCurrency(subtotal + totalDiscountAmount));
 
   // 10. Recopilar mensajes y advertencias
   if (couponOutcome.isProvided && !couponOutcome.applies && couponOutcome.error) {

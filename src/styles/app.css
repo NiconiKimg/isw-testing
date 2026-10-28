@@ -646,6 +646,7 @@ body {
    5. Order Summary Panel
    ========================================================================== */
 .order-summary-panel {
+  min-width: 420px; /* ERROR EN EL CÓDIGO: ancho fijo que rompe la responsividad en móviles */
   background-color: var(--color-surface-card);
   border: 1px solid rgba(232, 223, 213, 0.8);
   border-radius: var(--radius-lg);

@@ -35,7 +35,7 @@ export const Navbar: React.FC = () => {
           <a href="#inicio" className="navbar-brand-link" aria-label="BelGrano Café - Inicio">
             <MonogramLogo size={46} className="navbar-logo" />
             <div className="navbar-brand-text">
-              <span className="navbar-brand-name">☕ BelGrano Café ☕</span>
+              <span className="navbar-brand-name">BelGrano Café</span>
               <span className="navbar-location-sub">Av. Belgrano 1432 · Rosario</span>
             </div>
           </a>
