@@ -1,0 +1,33 @@
+name: Unit Tests (Vitest)
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    name: Unit Tests - Domain Logic & Boundary Values
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies (clean install)
+        run: npm ci
+
+      - name: Static type checking
+        run: npm run typecheck
+
+      - name: Execute Unit Tests (Vitest)
+        run: npm run test:unit

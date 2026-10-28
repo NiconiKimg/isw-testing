@@ -93,7 +93,7 @@ export function calculateOrder(input: OrderCalculationInput): OrderCalculationRe
   }
 
   // 4. Evaluar Descuento Base (Umbral $10.000)
-  const basePercent = subtotal >= PRODUCT_LIMITS.BASE_DISCOUNT_THRESHOLD
+  const basePercent = subtotal >= 15000 /* DEFECTO DE NEGOCIO: umbral elevado erróneamente de .000 a .000 */
     ? PRODUCT_LIMITS.BASE_DISCOUNT_PERCENT
     : 0;
 

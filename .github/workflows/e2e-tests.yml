@@ -1,4 +1,4 @@
-name: CI Pipeline - BelGrano Café
+name: End-to-End Tests (Cypress)
 
 on:
   push:
@@ -10,35 +10,9 @@ permissions:
   contents: read
 
 jobs:
-  quality-and-tests:
-    name: Lint, Types, Unit & Integration Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js 22.x
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'npm'
-
-      - name: Install dependencies (clean install)
-        run: npm ci
-
-      - name: Static type checking
-        run: npm run typecheck
-
-      - name: Execute Unit and Integration Tests (Vitest + RTL)
-        run: npm run test:run
-
-      - name: Build production bundle
-        run: npm run build
-
   e2e-tests:
-    name: End-to-End Tests (Cypress)
+    name: E2E Tests - Real Browser & Cypress Cloud
     runs-on: ubuntu-latest
-    needs: quality-and-tests
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

@@ -56,9 +56,15 @@ npm ci
 npm run typecheck
 ```
 
-### 3. Pruebas Unitarias y de Integración (Vitest)
+### 3. Pruebas por Nivel (Vitest)
 ```bash
-# Ejecución desatendida
+# Pruebas unitarias de dominio puro
+npm run test:unit
+
+# Pruebas de integración de componentes e interfaz
+npm run test:integration
+
+# Suite completa desatendida (unitarias + integración)
 npm run test:run
 
 # Modo interactivo con hot-reload
@@ -89,14 +95,17 @@ npm run verify:all
 
 ---
 
-## ☁️ Integración Continua (CI) y Cypress Cloud
+## ☁️ Integración Continua (CI) en 3 Flujos Independientes
 
-* **Pipeline de GitHub Actions (`.github/workflows/ci.yml`):**
-  Se dispara automáticamente en cada `push` o `pull_request` a las ramas principales (`main`, `master`, `develop`).
-  1. Verificación de tipos (`npm run typecheck`).
-  2. Ejecución de 63 pruebas unitarias y de integración (`npm run test:run`).
-  3. Compilación de producción (`npm run build`).
-  4. Ejecución de Cypress E2E con grabación automatizada (`cypress-io/github-action@v6`).
+El proyecto implementa 3 flujos de trabajo (*workflows*) separados en GitHub Actions:
 
-* **Cypress Cloud (`Project ID: bu64z5`):**
-  Graba métricas de rendimiento, historial de corridas, capturas automáticas ante fallos y videos `.mp4` completos de cada ejecución.
+1. **Flujo 1: Pruebas Unitarias (`.github/workflows/unit-tests.yml`):**
+   - Ejecuta chequeo estático de tipos (`npm run typecheck`).
+   - Ejecuta la suite de 51 pruebas unitarias puras (`npm run test:unit`).
+
+2. **Flujo 2: Pruebas de Integración (`.github/workflows/integration-tests.yml`):**
+   - Ejecuta las 12 pruebas de integración con React Testing Library (`npm run test:integration`).
+
+3. **Flujo 3: Pruebas End-to-End (`.github/workflows/e2e-tests.yml`):**
+   - Compila el bundle de producción (`npm run build`).
+   - Ejecuta Cypress en Chromium real con grabación automatizada a [Cypress Cloud](https://cloud.cypress.io/) (`Project ID: bu64z5`).

@@ -81,7 +81,7 @@ export function useOrder() {
   }, [quantities, membershipCode, couponCode]);
 
   const handleReset = useCallback(() => {
-    setQuantities({});
+    // setQuantities({}); /* DEFECTO DE ESTADO: se omite limpiar las cantidades al reiniciar */
     setMembershipCode('');
     setCouponCode('');
     setCalculationResult(null);
