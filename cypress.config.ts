@@ -5,7 +5,7 @@ export default defineConfig({
   video: true,
   screenshotOnRunFailure: true,
   e2e: {
-    baseUrl: 'http://127.0.0.1:4173',
+    baseUrl: 'http://localhost:5173/',
     supportFile: false,
     video: true,
     screenshotOnRunFailure: true,
