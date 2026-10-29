@@ -5,6 +5,7 @@ on:
     branches: [ main, master, develop ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -27,12 +28,12 @@ jobs:
         run: npm ci
 
       - name: Run Cypress E2E with local preview server & Cypress Cloud
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           build: npm run build
           start: npm run preview
-          wait-on: 'http://localhost:4173'
-          wait-on-timeout: 60
+          wait-on: 'http://127.0.0.1:4173'
+          wait-on-timeout: 120
           browser: chrome
           record: ${{ secrets.CYPRESS_RECORD_KEY != '' }}
         env:
