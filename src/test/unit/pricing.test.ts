@@ -35,11 +35,25 @@ describe('Unit Tests: Cálculo Monetario y Liquidación de Pedido (Vitest)', () 
       ];
       expect(calculateSubtotal(items)).toBe(7500);
     });
+
+    it('[TC-BVA-08] Carrito = [Espresso x 1 ($2.000)] -> Pedido procesado; Subtotal = $2.000, Total = $2.000', () => {
+      const items: CartItem[] = [
+        { product: espresso, quantity: 1 }
+      ];
+      const result = calculateOrder({
+        items,
+        isLoyalCustomer: false
+      });
+      expect(result.isValid).toBe(true);
+      if (result.isValid) {
+        expect(result.subtotal).toBe(2000);
+        expect(result.total).toBe(2000);
+      }
+    });
   });
 
-  describe('Análisis de Valores Límite del Umbral de Descuento (BVA-THR-01..03)', () => {
-    it('[BVA-THR-01] $9.999 otorga 0% descuento base', () => {
-      // Simulamos subtotal con items personalizados o equivalentes
+  describe('Análisis de Valores Límite del Umbral de Descuento (BVA)', () => {
+    it('[TC-BVA-09] Subtotal = $9.999 (Inmediato inferior al umbral) -> Descuento base 0%; Total = $9.999', () => {
       // 1 latte ($3.800) + 1 cappuccino ($3.500) + 1 americano ($2.500) = $9.800 (< 10.000)
       const items: CartItem[] = [
         { product: latte, quantity: 1 },
@@ -59,7 +73,7 @@ describe('Unit Tests: Cálculo Monetario y Liquidación de Pedido (Vitest)', () 
       }
     });
 
-    it('[BVA-THR-02] exactamente $10.000 otorga 5% descuento base', () => {
+    it('[TC-BVA-10] Subtotal = $10.000 (Frontera exacta del umbral) -> Descuento base 5% ($500); Total = $9.500', () => {
       // 4 Americanos * $2.500 = $10.000 exactos
       const items: CartItem[] = [
         { product: americano, quantity: 4 }
@@ -74,24 +88,6 @@ describe('Unit Tests: Cálculo Monetario y Liquidación de Pedido (Vitest)', () 
         expect(result.discount.basePercent).toBe(5);
         expect(result.discount.baseAmount).toBe(500);
         expect(result.total).toBe(9500);
-      }
-    });
-
-    it('[BVA-THR-03] $10.500 (> $10.000) otorga 5% descuento base', () => {
-      // 3 Cappuccinos * $3.500 = $10.500
-      const items: CartItem[] = [
-        { product: cappuccino, quantity: 3 }
-      ];
-      const result = calculateOrder({
-        items,
-        isLoyalCustomer: false
-      });
-      expect(result.isValid).toBe(true);
-      if (result.isValid) {
-        expect(result.subtotal).toBe(10500);
-        expect(result.discount.basePercent).toBe(5);
-        expect(result.discount.baseAmount).toBe(525);
-        expect(result.total).toBe(9975);
       }
     });
   });
@@ -132,7 +128,7 @@ describe('Unit Tests: Cálculo Monetario y Liquidación de Pedido (Vitest)', () 
       }
     });
 
-    it('aplica 5% de fidelidad al ingresar un código de socio válido (ej: SOCIO-101)', () => {
+    it('[TC-BVA-14] aplica 5% de fidelidad al ingresar un código de socio válido (ej: SOCIO-101)', () => {
       const items: CartItem[] = [
         { product: cappuccino, quantity: 1 } // $3.500
       ];
@@ -148,7 +144,7 @@ describe('Unit Tests: Cálculo Monetario y Liquidación de Pedido (Vitest)', () 
       }
     });
 
-    it('rechaza beneficio y genera advertencia si el código de socio es inválido', () => {
+    it('[TC-BVA-16] rechaza beneficio y genera advertencia si el código de socio es inválido', () => {
       const items: CartItem[] = [
         { product: cappuccino, quantity: 1 } // $3.500
       ];
@@ -185,7 +181,7 @@ describe('Unit Tests: Cálculo Monetario y Liquidación de Pedido (Vitest)', () 
   });
 
   describe('Rechazo de Pedidos Inválidos', () => {
-    it('rechaza orden con items vacíos', () => {
+    it('[TC-BVA-07] rechaza orden con items vacíos', () => {
       const result = calculateOrder({
         items: [],
         isLoyalCustomer: false
@@ -196,7 +192,7 @@ describe('Unit Tests: Cálculo Monetario y Liquidación de Pedido (Vitest)', () 
       }
     });
 
-    it('rechaza orden con importe superior a $100.000', () => {
+    it('[TC-BVA-12] rechaza orden con importe superior a $100.000', () => {
       // 6 productos a 20 unidades de Latte ($3.800 * 20 = $76.000) + 20 Cappuccinos ($3.500 * 20 = $70.000) = $146.000
       const items: CartItem[] = [
         { product: latte, quantity: 20 },

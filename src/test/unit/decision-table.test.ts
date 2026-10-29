@@ -3,7 +3,7 @@ import { calculateOrder } from '../../domain/pricing';
 import { CATALOG } from '../../data/products';
 import { CartItem } from '../../domain/types';
 
-describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
+describe('Unit Tests: Tablas de Decisión de Promociones (Regla 1..11)', () => {
   const espresso = CATALOG.find(p => p.id === 'espresso')!;   // $2.000
   const americano = CATALOG.find(p => p.id === 'americano')!; // $2.500
   const latte = CATALOG.find(p => p.id === 'latte')!;         // $3.800
@@ -23,7 +23,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     { product: latte, quantity: 3 } // 3 * 3800 = $11.400
   ];
 
-  it('[DT-R01] Pedido Inválido -> Rechazar pedido y reportar error', () => {
+  it('[Regla 1] Pedido Inválido -> Rechazar pedido / Alerta de validación', () => {
     const result = calculateOrder({
       items: [],
       isLoyalCustomer: false
@@ -31,7 +31,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     expect(result.isValid).toBe(false);
   });
 
-  it('[DT-R02] Subtotal < $10k, Sin fidelidad, Sin cupón -> 0% Descuento', () => {
+  it('[Regla 2] Subtotal < $10.000, Sin fidelidad, Sin cupón -> 0% Descuento', () => {
     const result = calculateOrder({
       items: itemsUnder10k,
       isLoyalCustomer: false
@@ -45,7 +45,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     }
   });
 
-  it('[DT-R03] Subtotal < $10k, Con fidelidad, Sin cupón -> 5% Descuento Fidelidad', () => {
+  it('[Regla 3] Subtotal < $10.000, Con fidelidad, Sin cupón -> 5% Descuento Fidelidad', () => {
     const result = calculateOrder({
       items: itemsUnder10k,
       isLoyalCustomer: true
@@ -61,7 +61,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     }
   });
 
-  it('[DT-R04] Subtotal < $10k, Sin fidelidad, Cupón válido -> 0% Dto y Alerta requisito $10k', () => {
+  it('[Regla 4] Subtotal < $10.000, Sin fidelidad, Cupón válido -> 0% Dto y Alerta: Cupón requiere subtotal de $10.000', () => {
     const result = calculateOrder({
       items: itemsUnder10k,
       isLoyalCustomer: false,
@@ -76,7 +76,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     }
   });
 
-  it('[DT-R05] Subtotal < $10k, Con fidelidad, Cupón válido -> 5% Fidelidad y Alerta cupón', () => {
+  it('[Regla 5] Subtotal < $10.000, Con fidelidad, Cupón válido -> 5% Fidelidad y Alerta: Cupón requiere subtotal de $10.000', () => {
     const result = calculateOrder({
       items: itemsUnder10k,
       isLoyalCustomer: true,
@@ -94,7 +94,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     }
   });
 
-  it('[DT-R06] Subtotal < $10k, Sin fidelidad, Cupón desconocido -> 0% Dto y Alerta cupón no válido', () => {
+  it('[Regla 6] Subtotal < $10.000, Sin fidelidad, Cupón desconocido -> 0% Dto y Alerta: Cupón no válido', () => {
     const result = calculateOrder({
       items: itemsUnder10k,
       isLoyalCustomer: false,
@@ -108,7 +108,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     }
   });
 
-  it('[DT-R07] Subtotal >= $10k, Sin fidelidad, Sin cupón -> 5% Descuento Base', () => {
+  it('[Regla 7] Subtotal >= $10.000, Sin fidelidad, Sin cupón -> 5% Descuento Base', () => {
     const result = calculateOrder({
       items: itemsExact10k,
       isLoyalCustomer: false
@@ -125,7 +125,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     }
   });
 
-  it('[DT-R08] Subtotal >= $10k, Con fidelidad, Sin cupón -> 10% Descuento (5% base + 5% fidelidad)', () => {
+  it('[Regla 8] Subtotal >= $10.000, Con fidelidad, Sin cupón -> 10% Descuento (5% base + 5% fidelidad)', () => {
     const result = calculateOrder({
       items: itemsExact10k,
       isLoyalCustomer: true
@@ -140,7 +140,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     }
   });
 
-  it('[DT-R09] Subtotal >= $10k, Sin fidelidad, Con cupón válido -> 15% Descuento (5% base + 10% cupón)', () => {
+  it('[Regla 9] Subtotal >= $10.000, Sin fidelidad, Con cupón válido -> 15% Descuento (5% base + 10% cupón)', () => {
     const result = calculateOrder({
       items: itemsOver10k,
       isLoyalCustomer: false,
@@ -157,7 +157,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     }
   });
 
-  it('[DT-R10] Subtotal >= $10k, Con fidelidad, Con cupón válido -> 20% Descuento (5% + 5% + 10%)', () => {
+  it('[Regla 10] Subtotal >= $10.000, Con fidelidad, Con cupón válido -> 20% Descuento (5% + 5% + 10%)', () => {
     const result = calculateOrder({
       items: itemsExact10k,
       isLoyalCustomer: true,
@@ -174,7 +174,7 @@ describe('Unit Tests: Tablas de Decisión de Promociones (DT-R01..R11)', () => {
     }
   });
 
-  it('[DT-R11] Subtotal >= $10k, Con fidelidad, Cupón desconocido -> 10% Descuento y Alerta', () => {
+  it('[Regla 11] Subtotal >= $10.000, Con fidelidad, Cupón desconocido -> 10% Descuento y Alerta: Cupón no válido', () => {
     const result = calculateOrder({
       items: itemsExact10k,
       isLoyalCustomer: true,
